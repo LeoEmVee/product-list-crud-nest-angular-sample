@@ -1,3 +1,4 @@
+import { CreateProductDTO } from './dto/product.dto';
 import {
   Controller,
   Get,
@@ -6,12 +7,13 @@ import {
   Delete,
   Res,
   HttpStatus,
+  Body,
 } from '@nestjs/common';
 
 @Controller('product')
 export class ProductController {
   @Post('/create')
-  createPost(@Res() res) {
+  createPost(@Res() res, @Body() createProductDTO: CreateProductDTO) {
     return res.status(HttpStatus.OK).json({
       message: 'Received',
     });

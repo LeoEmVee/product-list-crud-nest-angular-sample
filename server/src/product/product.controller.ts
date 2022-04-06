@@ -13,7 +13,7 @@ import {
 @Controller('product')
 export class ProductController {
   @Post('/create')
-  createPost(@Res() res, @Body() createProductDTO: CreateProductDTO) {
+  createPost(@Res() res: any, @Body() createProductDTO: CreateProductDTO) {
     return res.status(HttpStatus.OK).json({
       message: 'Received',
     });

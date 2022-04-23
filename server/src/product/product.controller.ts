@@ -8,8 +8,13 @@ import {
   Res,
   HttpStatus,
   Body,
+  Param,
+  NotFoundException,
+  NotAcceptableException,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
+import { Product } from './interfaces/product.interface';
+import mongoose from 'mongoose';
 
 @Controller('product')
 export class ProductController {
@@ -41,5 +46,18 @@ export class ProductController {
         }`,
       Products: allProducts,
     });
+  }
+
+  @Get('/:productID')
+  async findOneProduct(@Res() res: any, @Param('productID') productID: string) {
+    if (!mongoose.isValidObjectId(productID))
+      throw new NotAcceptableException('Please enter valid product id');
+    const product = await this.productService.findOneProduct(productID);
+    if (!product) throw new NotFoundException('Product not found');
+    else
+      return res.status(HttpStatus.OK).json({
+        message: 'Product found',
+        'Product details': product,
+      });
   }
 }

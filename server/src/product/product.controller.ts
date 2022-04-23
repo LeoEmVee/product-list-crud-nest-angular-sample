@@ -11,9 +11,9 @@ import {
   Param,
   NotFoundException,
   NotAcceptableException,
+  Query,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
-import { Product } from './interfaces/product.interface';
 import mongoose from 'mongoose';
 
 @Controller('product')
@@ -35,8 +35,9 @@ export class ProductController {
   }
 
   @Get('/')
-  async findAllProducts(@Res() res) {
+  async findAllProducts(@Res() res: any) {
     const allProducts = await this.productService.findAllProducts();
+    console.log(res);
     return res.status(HttpStatus.OK).json({
       message:
         'Products successfully retrieved. ' +
@@ -54,10 +55,41 @@ export class ProductController {
       throw new NotAcceptableException('Please enter valid product id');
     const product = await this.productService.findOneProduct(productID);
     if (!product) throw new NotFoundException('Product not found');
-    else
-      return res.status(HttpStatus.OK).json({
-        message: 'Product found',
-        'Product details': product,
-      });
+    return res.status(HttpStatus.OK).json({
+      message: 'Product found',
+      'Product details': product,
+    });
+  }
+
+  @Put('/update/:productID')
+  async updateProduct(
+    @Res() res: any,
+    @Body() createProductDTO: CreateProductDTO,
+    @Param('productID') productID: string,
+  ) {
+    if (!mongoose.isValidObjectId(productID))
+      throw new NotAcceptableException('Please enter valid product id');
+    const updatedProduct = await this.productService.updateProduct(
+      productID,
+      createProductDTO,
+    );
+    if (!updatedProduct) throw new NotFoundException('Product not found');
+    return res.status(HttpStatus.OK).json({
+      message: 'Product successfully updated',
+      'New product details': updatedProduct,
+    });
+  }
+
+  @Delete('/delete')
+  async deleteProduct(@Res() res: any, @Query('productID') productID: string) {
+    // We could have used @Param again instead of @Query. Here we use it just to show the alternative
+    if (!mongoose.isValidObjectId(productID))
+      throw new NotAcceptableException('Please enter valid product id');
+    const deletedProduct = await this.productService.deleteProduct(productID);
+    if (!deletedProduct) throw new NotFoundException('Product not found');
+    return res.status(HttpStatus.OK).json({
+      message: 'Product successfully deleted',
+      'Deleted product': deletedProduct,
+    });
   }
 }

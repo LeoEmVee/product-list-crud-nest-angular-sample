@@ -12,13 +12,26 @@ export class ProductService {
 
   constructor(private http: HttpClient) {}
 
-  createProduct(product: Product) {}
+  createProduct(product: Product): Observable<Product> {
+    return this.http.post<Product>(`${this.BASE_URL}/product/create`, product);
+  }
 
   findAllProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.BASE_URL}/product`);
   }
 
-  findOneProduct(id: string) {}
-  updateProduct(id: string, product: Product) {}
-  deleteProduct(id: string) {}
+  findOneProduct(id: string): Observable<Product> {
+    return this.http.get<Product>(`${this.BASE_URL}/product/${id}`);
+  }
+
+  updateProduct(id: string, product: Product): Observable<Product> {
+    return this.http.put<Product>(
+      `${this.BASE_URL}/product/update/${id}`,
+      product
+    );
+  }
+
+  deleteProduct(id: string): Observable<Product> {
+    return this.http.delete<Product>(`${this.BASE_URL}/delete?productID=${id}`);
+  }
 }

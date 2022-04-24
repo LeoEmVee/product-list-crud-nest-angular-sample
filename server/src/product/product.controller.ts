@@ -37,15 +37,7 @@ export class ProductController {
   @Get('/')
   async findAllProducts(@Res() res: any) {
     const allProducts = await this.productService.findAllProducts();
-    return res.status(HttpStatus.OK).json({
-      message:
-        'Products successfully retrieved. ' +
-        `${
-          (allProducts.length && 'Here they are:') ||
-          'But currently there are none'
-        }`,
-      Products: allProducts,
-    });
+    return res.status(HttpStatus.OK).json(allProducts);
   }
 
   @Get('/:productID')

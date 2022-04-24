@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Product } from 'src/app/interfaces/Product';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -15,13 +16,15 @@ export class ProductFormComponent implements OnInit {
     imageURL: '',
   };
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService, private router: Router) {}
 
   ngOnInit(): void {}
 
   submitProduct() {
     this.productService.createProduct(this.product).subscribe({
-      next: (res) => console.log(res),
+      next: (res) => {
+        console.log(res), this.router.navigate(['/']);
+      },
       error: (err) => console.log(err),
     });
   }

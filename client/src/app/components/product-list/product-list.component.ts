@@ -25,4 +25,14 @@ export class ProductListComponent implements OnInit {
       error: (err) => console.log(err),
     });
   }
+
+  deleteProduct(id: any): void {
+    this.productService.deleteProduct(id).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.findAllProducts();
+      },
+      error: (err) => console.log(err),
+    });
+  }
 }

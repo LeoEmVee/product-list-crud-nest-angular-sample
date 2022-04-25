@@ -20,7 +20,6 @@ export class ProductListComponent implements OnInit {
     this.productService.findAllProducts().subscribe({
       next: (res) => {
         this.products = res;
-        console.log(res);
       },
       error: (err) => console.log(err),
     });
@@ -29,7 +28,6 @@ export class ProductListComponent implements OnInit {
   deleteProduct(id: any): void {
     this.productService.deleteProduct(id).subscribe({
       next: (res) => {
-        console.log(res);
         this.findAllProducts();
       },
       error: (err) => console.log(err),

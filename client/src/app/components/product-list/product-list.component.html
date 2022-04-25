@@ -11,7 +11,12 @@
       <button (click)="deleteProduct(product._id)" class="btn btn-danger">
         Delete
       </button>
-      <button class="btn btn-secondary">Edit</button>
+      <button
+        class="btn btn-secondary"
+        [routerLink]="['/product/update/', product._id]"
+      >
+        Edit
+      </button>
     </div>
     <div class="col-md-4">
       <img [src]="product.imageURL" alt="No image available" class="card-img" />

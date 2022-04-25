@@ -46,10 +46,7 @@ export class ProductController {
       throw new NotAcceptableException('Please enter valid product id');
     const product = await this.productService.findOneProduct(productID);
     if (!product) throw new NotFoundException('Product not found');
-    return res.status(HttpStatus.OK).json({
-      message: 'Product found',
-      'Product details': product,
-    });
+    return res.status(HttpStatus.OK).json(product);
   }
 
   @Put('/update/:productID')

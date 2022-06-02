@@ -10,7 +10,9 @@ Product list sample built with Nestjs & Angular, following the tutorials by [Faz
 - Environment:
   * Server: You will need a .env file with:
     PRODUCT_LIST_CRUD_NEST_ANGULAR_SAMPLE_DB_URL (server/src/app.module.ts). I used my MongoDB Atlas cluster.
+    
     PORT (server/src/main.ts) I used 3003, but up to you.
+    
     ANGULAR_CLIENT_URL (server/src/main.ts). I used the same as below.
 
   * Client: You will need an apiKey for BASE_URL in client/src/app/services/product.service.ts. I did not make it to get .env files processed with Angular, so I just ".gitignored" the Angular environments folder and stored the variable in environment.ts. This is just a temporary workaround until I learn how to do it properly. And actually what I stored there is just the Url to the Api, which is the usual angular port 😏.
